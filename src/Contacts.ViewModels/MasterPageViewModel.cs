@@ -10,7 +10,9 @@ namespace Contacts.ViewModels
     public class MasterPageViewModel : ViewModelBase
     {
 		public ObservableCollection<Contact> Contacts { get; set; }
+		public string SearchQuery { get; set; }
 
+		public ICommand Search { get; set; }
 		public ICommand EditCommand { get; set; }
 		public ICommand DeleteCommand { get; set; }
 		public ICommand CreateCommand { get; set; }
