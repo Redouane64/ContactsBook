@@ -29,11 +29,7 @@ namespace Contacts.ViewModels
 			get => _contact;
 			set
 			{
-				if (_contact != value)
-				{
-					_contact = value;
-					RaisePropertyChanged(nameof(Contact));
-				}
+				SetProperty(ref _contact, value, nameof(Contact));
 			}
 		}
 

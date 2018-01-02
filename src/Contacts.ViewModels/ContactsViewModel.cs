@@ -9,7 +9,7 @@ namespace Contacts.ViewModels
 	public class ContactsViewModel : ModelBase
 	{
 		private ObservableCollection<Contact> _contacts;
-		private string _searchQuery;
+		private string _searchQuery = String.Empty;
 
 		// TODO: Initialize commands.
 
@@ -23,11 +23,7 @@ namespace Contacts.ViewModels
 			get => _contacts;
 			set
 			{
-				if (_contacts != value)
-				{
-					_contacts = value;
-					RaisePropertyChanged(nameof(Contacts));
-				}
+				SetProperty(ref _contacts, value, nameof(Contacts));
 			}
 		}
 		public string SearchQuery
@@ -35,10 +31,8 @@ namespace Contacts.ViewModels
 			get => _searchQuery;
 			set
 			{
-				if (!_searchQuery.Equals(value, StringComparison.OrdinalIgnoreCase))
+				if (SetProperty(ref _searchQuery, value, nameof(SearchQuery)))
 				{
-					_searchQuery = value;
-					RaisePropertyChanged(nameof(SearchQuery));
 					SearchCommand.RaiseCanExecuteChangedEvent();
 				}
 			}

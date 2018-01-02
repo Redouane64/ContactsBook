@@ -19,11 +19,7 @@ namespace Contacts.Models
 			get => _firstName;
 			set
 			{
-				if(!_firstName.Equals(value, StringComparison.OrdinalIgnoreCase))
-				{
-					_firstName = value;
-					RaisePropertyChanged(nameof(FirstName));
-				}
+				SetProperty(ref _firstName, value, nameof(FirstName));
 			}
 		}
 		public string LastName
@@ -31,11 +27,7 @@ namespace Contacts.Models
 			get => _lastName;
 			set
 			{
-				if (!_lastName.Equals(value, StringComparison.OrdinalIgnoreCase))
-				{
-					_lastName = value;
-					RaisePropertyChanged(nameof(LastName));
-				}
+				SetProperty(ref _lastName, value, nameof(LastName));
 			}
 		}
 		public string Email
@@ -43,11 +35,7 @@ namespace Contacts.Models
 			get => _email;
 			set
 			{
-				if (!_email.Equals(value, StringComparison.OrdinalIgnoreCase))
-				{
-					_email = value;
-					RaisePropertyChanged(nameof(Email));
-				}
+				SetProperty(ref _email, value, nameof(Email));
 			}
 		}
 		public string Comments
@@ -55,11 +43,7 @@ namespace Contacts.Models
 			get => _comments;
 			set
 			{
-				if (!_comments.Equals(value, StringComparison.OrdinalIgnoreCase))
-				{
-					_comments = value;
-					RaisePropertyChanged(nameof(Comments));
-				}
+				SetProperty(ref _comments, value, nameof(Comments));
 			}
 		}
 	}
