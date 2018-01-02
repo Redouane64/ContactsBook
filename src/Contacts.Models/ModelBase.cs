@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace Contacts.ViewModels
+namespace Contacts.Models
 {
-	public abstract class ViewModelBase : INotifyPropertyChanged
-	{
+    public abstract class ModelBase : INotifyPropertyChanged
+    {
 		#region INotifyPropertyChanged Implementation
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -16,5 +16,6 @@ namespace Contacts.ViewModels
 		}
 
 		#endregion
+
 	}
 }

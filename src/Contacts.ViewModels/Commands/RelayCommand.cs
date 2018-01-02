@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 
 namespace Contacts.ViewModels.Commands
@@ -19,6 +17,11 @@ namespace Contacts.ViewModels.Commands
 		{
 			_execute = execute;
 			_canExecute = canExecute;
+		}
+
+		public void RaiseCanExecuteChangedEvent()
+		{
+			CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

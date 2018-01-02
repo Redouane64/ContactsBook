@@ -120,9 +120,24 @@
 		</DataTemplate>
 
 		<DataTemplate x:Key="MasterPageViewModelDataTemplate"
-					  DataType="{x:Type viewmodels:MasterPageViewModel}">
+					  DataType="{x:Type viewmodels:ContactsViewModel}">
 			<Grid>
-				
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto"></RowDefinition>
+					<RowDefinition></RowDefinition>
+				</Grid.RowDefinitions>
+				<StackPanel Orientation="Horizontal">
+					<Button Content="Create"
+							Command="{Binding CreateCommand}"></Button>
+					<Button Content="Edit"
+							Command="{Binding EditCommand}"></Button>
+					<Button Content="Delete"
+							Command="{Binding DeleteCommand}"></Button>
+					<TextBox Text="{Binding SearchQuery}"
+							 Style="{StaticResource MediumLightFontStyle}"></TextBox>
+					<Button Content="Search"
+							Command="{Binding SearchCommand}"></Button>
+				</StackPanel>
 			</Grid>
 		</DataTemplate>
 		
