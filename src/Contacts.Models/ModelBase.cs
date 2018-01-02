@@ -17,7 +17,7 @@ namespace Contacts.Models
 
 		protected bool SetProperty<T>(ref T member, T value, string property)
 		{
-			if (member.Equals(value))
+			if (Object.Equals(member, value))
 				return false;
 
 			member = value;
