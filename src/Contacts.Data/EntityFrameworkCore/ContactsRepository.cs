@@ -16,12 +16,12 @@ namespace Contacts.Data.EntityFrameworkCore
 			_dbContext = dbContext;
 		}
 
-		public Task Add(Contact item)
+		public Task AddAsync(Contact item)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Task Delete(Contact item)
+		public Task DeleteAsync(Contact item)
 		{
 			throw new NotImplementedException();
 		}
@@ -31,7 +31,7 @@ namespace Contacts.Data.EntityFrameworkCore
 			throw new NotImplementedException();
 		}
 
-		public Task<IEnumerable<Contact>> GetAll()
+		public Task<IEnumerable<Contact>> GetAllAsync()
 		{
 			throw new NotImplementedException();
 		}

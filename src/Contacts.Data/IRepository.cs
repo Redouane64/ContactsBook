@@ -5,10 +5,10 @@ namespace Contacts.Data
 {
 	public interface IRepository<T> where T: class
     {
-		Task<IEnumerable<T>> GetAll();
+		Task<IEnumerable<T>> GetAllAsync();
 		Task<T> Get();
-		Task Add(T item);
-		Task Delete(T item);
+		Task AddAsync(T item);
+		Task DeleteAsync(T item);
 		Task Update(T item);
     }
 }
