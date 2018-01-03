@@ -13,12 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ContactsBook.Views
+namespace Contacts.Views
 {
 	/// <summary>
 	/// Interaction logic for ContactView.xaml
 	/// </summary>
-	public partial class ContactView : Page
+	public partial class ContactView : UserControl
 	{
 		public ContactView()
 		{

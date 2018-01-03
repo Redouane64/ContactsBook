@@ -1,17 +1,20 @@
-﻿<Window x:Class="ContactsBook.MainWindow"
+﻿<Window x:Class="Contacts.MainWindow"
 		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:ContactsBook"
+		xmlns:i="http://schemas.microsoft.com/expression/2010/interactions"
+		xmlns:ix="http://schemas.microsoft.com/expression/2010/interactivity"
+		xmlns:local="clr-namespace:Contacts"
+		xmlns:viewmodels="clr-namespace:Contacts.ViewModels;assembly=Contacts.ViewModels"
 		mc:Ignorable="d"
 		Title="Contacts Book"
 		MinHeight="460"
 		MinWidth="620">
+	<Window.DataContext>
+		<viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
+	</Window.DataContext>
 	<Grid>
-		<Frame Source="Views/ContactsView.xaml"
-			   NavigationUIVisibility="Hidden">
-
-		</Frame>
+		<ContentControl Content="{Binding ContactsViewModel}"></ContentControl>
 	</Grid>
 </Window>
