@@ -11,18 +11,20 @@ namespace Contacts.ViewModels
 		private readonly DummyContactsRepository _repository;
 
 		private ObservableCollection<Contact> _contacts;
-		private string _searchQuery = String.Empty;
 		private Contact _selectedContact;
+		private string _searchQuery = String.Empty;
+
+		public event Action<Contact> OnCreateOrEditRequested;
 
 		public ContactsViewModel()
 		{
 			CreateCommand = new RelayCommand(Create, CanCreate);
 			EditCommand = new RelayCommand(Edit, CanEdit);
-			DeleteCommand = new RelayCommand(Delete, CanDelete);
+			DeleteCommand = new RelayCommand(DeleteAsync, CanDelete);
 			SearchCommand = new RelayCommand(Search, CanSearch);
 
 			// TODO: 
-			_repository = new DummyContactsRepository();
+			_repository = DummyContactsRepository.Singleton;
 			FetchContacts();
 		}
 
@@ -38,37 +40,38 @@ namespace Contacts.ViewModels
 
 		private void Create(object obj)
 		{
-			//throw new NotImplementedException();
+			OnCreateOrEditRequested?.Invoke(new Contact() { Id = 0 });
 		}
 
-		private bool CanEdit(object obj)
+		private bool CanEdit(object parameter)
 		{
 			return SelectedContact != null;
 		}
 
-		private void Edit(object obj)
+		private void Edit(object parameter)
 		{
-			throw new NotImplementedException();
+			OnCreateOrEditRequested?.Invoke(SelectedContact);
 		}
 
-		private bool CanDelete(object obj)
+		private bool CanDelete(object parameter)
 		{
 			return SelectedContact != null;
 		}
 
-		private void Delete(object obj)
+		private async void DeleteAsync(object parameter)
 		{
-			throw new NotImplementedException();
+			await _repository.DeleteAsync(SelectedContact);
+			FetchContacts();
 		}
 
-		private bool CanSearch(object obj)
+		private bool CanSearch(object parameter)
 		{
 			return ! String.IsNullOrEmpty(SearchQuery);
 		}
 
 		private void Search(object obj)
 		{
-			throw new NotImplementedException();
+			// TO DO:
 		}
 
 		public ObservableCollection<Contact> Contacts

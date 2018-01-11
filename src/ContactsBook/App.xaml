@@ -138,67 +138,6 @@
 
 			</Grid>
 		</DataTemplate>
-
-		<DataTemplate DataType="{x:Type viewmodels:ContactViewModel}">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition></RowDefinition>
-					<RowDefinition Height="auto"></RowDefinition>
-				</Grid.RowDefinitions>
-				<ContentControl Grid.Row="0"
-								ContentTemplate="{StaticResource ContactEditorViewDataTemplate}"
-								Content="{Binding Contact}"></ContentControl>
-				<StackPanel Grid.Row="1"
-							HorizontalAlignment="Right"
-							Orientation="Horizontal">
-					<Button Command="{Binding SaveCommand}"
-							IsDefault="True"
-							HorizontalAlignment="Right"
-							Content="Save"></Button>
-				</StackPanel>
-			</Grid>
-		</DataTemplate>
-
-		<DataTemplate DataType="{x:Type viewmodels:ContactsViewModel}">
-			<Grid>
-				<Grid.Resources>
-					<Style TargetType="{x:Type TextBox}"
-						   BasedOn="{StaticResource MediumFontTextBoxStyle}">
-						<Setter Property="Width"
-								Value="200"></Setter>
-					</Style>
-					<Style TargetType="{x:Type DataGrid}"
-						   BasedOn="{StaticResource SmallLightFontStyle}"></Style>
-				</Grid.Resources>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto"></RowDefinition>
-					<RowDefinition></RowDefinition>
-				</Grid.RowDefinitions>
-				<Grid Grid.Row="0">
-					<StackPanel Orientation="Horizontal">
-						<Button Content="Create"
-								Command="{Binding CreateCommand}"></Button>
-						<Button Content="Edit"
-								Command="{Binding EditCommand}"></Button>
-						<Button Content="Delete"
-								Command="{Binding DeleteCommand}"></Button>
-					</StackPanel>
-					<StackPanel Orientation="Horizontal"
-								HorizontalAlignment="Right">
-						<TextBox Text="{Binding SearchQuery}"></TextBox>
-						<Button Content="Search"
-								Command="{Binding SearchCommand}"></Button>
-					</StackPanel>
-				</Grid>
-				<DataGrid Grid.Row="1"
-						  Margin="4,0,4,4"
-						  ItemsSource="{Binding Contacts}"
-						  SelectedValue="{Binding SelectedContact}"
-						  CanUserAddRows="False"
-						  CanUserDeleteRows="False">
-				</DataGrid>
-			</Grid>
-		</DataTemplate>
-
+	
 	</Application.Resources>
 </Application>

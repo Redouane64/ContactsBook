@@ -15,13 +15,15 @@ namespace Contacts.Models
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		protected bool SetProperty<T>(ref T member, T value, string property)
+		protected bool SetProperty<T>(ref T member, T value, string propertyName)
 		{
 			if (Object.Equals(member, value))
+			{
 				return false;
+			}
 
 			member = value;
-			RaisePropertyChanged(nameof(property));
+			RaisePropertyChanged(propertyName);
 			return true;
 		}
 		#endregion

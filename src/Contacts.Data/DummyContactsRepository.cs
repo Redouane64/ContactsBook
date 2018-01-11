@@ -10,6 +10,24 @@ namespace Contacts.Data
 {
 	public class DummyContactsRepository : IRepository<Contact>
 	{
+		private static object _syncroot = new object();
+		private static DummyContactsRepository _singleton;
+		public static DummyContactsRepository Singleton
+		{
+			get
+			{
+				lock (_syncroot)
+				{
+					if (_singleton == null)
+					{
+						_singleton = new DummyContactsRepository();
+					}
+				}
+
+				return _singleton;
+			}
+		}
+
 		private readonly ObservableCollection<Contact> _contacts;
 
 		public DummyContactsRepository()

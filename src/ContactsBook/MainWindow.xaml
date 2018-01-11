@@ -7,14 +7,42 @@
 		xmlns:ix="http://schemas.microsoft.com/expression/2010/interactivity"
 		xmlns:local="clr-namespace:Contacts"
 		xmlns:viewmodels="clr-namespace:Contacts.ViewModels;assembly=Contacts.ViewModels"
+		xmlns:views="clr-namespace:Contacts.Views"
 		mc:Ignorable="d"
 		Title="Contacts Book"
 		MinHeight="460"
 		MinWidth="620">
+	<Window.Resources>
+		<DataTemplate DataType="{x:Type viewmodels:ContactsViewModel}">
+			<views:ContactsView></views:ContactsView>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type viewmodels:ContactViewModel}">
+			<views:ContactView></views:ContactView>
+		</DataTemplate>
+	</Window.Resources>
 	<Window.DataContext>
 		<viewmodels:MainWindowViewModel></viewmodels:MainWindowViewModel>
 	</Window.DataContext>
 	<Grid>
-		<ContentControl Content="{Binding ContactsViewModel}"></ContentControl>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"></RowDefinition>
+			<RowDefinition></RowDefinition>
+		</Grid.RowDefinitions>
+		<Menu Grid.Row="0">
+			<MenuItem Header="_File">
+				<MenuItem Header="_Quit"></MenuItem>
+			</MenuItem>
+			<MenuItem Header="_Contacts">
+				<MenuItem Header="Create"
+						  Command="{Binding CurrentViewModel.CreateCommand}"></MenuItem>
+				<Separator></Separator>
+				<MenuItem Header="Edit"
+						  Command="{Binding CurrentViewModel.EditCommand}"></MenuItem>
+				<MenuItem Header="Delete"
+						  Command="{Binding CurrentViewModel.DeleteCommand}"></MenuItem>
+			</MenuItem>
+		</Menu>
+		<ContentControl Grid.Row="1"
+						Content="{Binding CurrentViewModel}"></ContentControl>
 	</Grid>
 </Window>

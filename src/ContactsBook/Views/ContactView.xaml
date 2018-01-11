@@ -6,10 +6,21 @@
 			 xmlns:local="clr-namespace:Contacts.Views"
 			 xmlns:viewmodels="clr-namespace:Contacts.ViewModels;assembly=Contacts.ViewModels"
 			 mc:Ignorable="d">
-	<UserControl.DataContext>
-		<viewmodels:ContactViewModel></viewmodels:ContactViewModel>
-	</UserControl.DataContext>
 	<Grid>
-		<ContentControl Content="{Binding}"></ContentControl>
+		<Grid.RowDefinitions>
+			<RowDefinition></RowDefinition>
+			<RowDefinition Height="auto"></RowDefinition>
+		</Grid.RowDefinitions>
+		<ContentControl Grid.Row="0"
+						ContentTemplate="{StaticResource ContactEditorViewDataTemplate}"
+						Content="{Binding Contact}"></ContentControl>
+		<StackPanel Grid.Row="1"
+					HorizontalAlignment="Right"
+					Orientation="Horizontal">
+			<Button Command="{Binding SaveCommand}"
+					IsDefault="True"
+					HorizontalAlignment="Right"
+					Content="Save"></Button>
+		</StackPanel>
 	</Grid>
 </UserControl>

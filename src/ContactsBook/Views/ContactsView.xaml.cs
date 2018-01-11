@@ -24,5 +24,6 @@ namespace Contacts.Views
 		{
 			InitializeComponent();
 		}
+
 	}
 }

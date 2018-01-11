@@ -9,31 +9,56 @@ namespace Contacts.ViewModels
 {
 	public class MainWindowViewModel : ModelBase
 	{
-		private ContactViewModel _contactViewModel;
-		private ContactsViewModel _contactsViewModel;
+		public static MainWindowViewModel Singleton
+		{
+			get;
+			private set;
+		}
+
+		private readonly ContactsViewModel _contactsViewModel;
+		private readonly ContactViewModel _contactViewModel;
+		private ModelBase _currentViewModel;
 
 		public MainWindowViewModel()
 		{
-			_contactsViewModel = new ContactsViewModel();
+			Singleton = this;
+
+			CurrentViewModel = _contactsViewModel = new ContactsViewModel();
+			_contactsViewModel.OnCreateOrEditRequested += new Action<Contact>(OnCreateOrEditContactRequested);
+
 			_contactViewModel = new ContactViewModel();
+			_contactViewModel.OnCompleted += new Action(delegate
+			{
+				_contactsViewModel.FetchContacts();
+				CurrentViewModel = _contactsViewModel;
+			});
+			
 		}
 
-		public ContactViewModel ContactViewModel
+		private void OnCreateOrEditContactRequested(Contact contact)
 		{
-			get => _contactViewModel;
+			CreateOrEditContact(contact);
+		}
+
+		public ModelBase CurrentViewModel
+		{
+			get => _currentViewModel;
 			set
 			{
-				_contactViewModel = value;
+				SetProperty(ref _currentViewModel, value, nameof(CurrentViewModel));
 			}
 		}
 
-		public ContactsViewModel ContactsViewModel
+		public void CreateOrEditContact(Contact contact = null)
 		{
-			get => _contactsViewModel;
-			set
+			if (contact == null)
 			{
-				_contactsViewModel = value;
+				CurrentViewModel = _contactViewModel;
+				return;
 			}
+
+			_contactViewModel.Contact = contact;
+			CurrentViewModel = _contactViewModel;
 		}
 	}
 }
