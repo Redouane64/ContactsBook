@@ -24,18 +24,22 @@ namespace Contacts.ViewModels
 			Singleton = this;
 
 			CurrentViewModel = _contactsViewModel = new ContactsViewModel();
-			_contactsViewModel.OnCreateOrEditRequested += new Action<Contact>(OnCreateOrEditContactRequested);
+			_contactsViewModel.CreateOrEdit += new EventHandler<Contact>(OnCreateOrEditContactRequested);
 
 			_contactViewModel = new ContactViewModel();
-			_contactViewModel.OnCompleted += new Action(delegate
+			_contactViewModel.Complete += new EventHandler<Contact>(delegate (object sender, Contact contact)
 			{
 				_contactsViewModel.FetchContacts();
 				CurrentViewModel = _contactsViewModel;
 			});
-			
+
+			_contactViewModel.Cancel += new EventHandler((delegate (object sender, EventArgs args)
+				{
+					CurrentViewModel = _contactsViewModel;
+				}));
 		}
 
-		private void OnCreateOrEditContactRequested(Contact contact)
+		private void OnCreateOrEditContactRequested(object sender, Contact contact)
 		{
 			CreateOrEditContact(contact);
 		}

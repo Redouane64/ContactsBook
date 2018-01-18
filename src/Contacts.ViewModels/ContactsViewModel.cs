@@ -8,19 +8,19 @@ namespace Contacts.ViewModels
 {
 	public class ContactsViewModel : ModelBase
 	{
-		private readonly DummyContactsRepository _repository;
+		private readonly IContactsRepository _repository;
 
 		private ObservableCollection<Contact> _contacts;
 		private Contact _selectedContact;
 		private string _searchQuery = String.Empty;
 
-		public event Action<Contact> OnCreateOrEditRequested;
+		public event EventHandler<Contact> CreateOrEdit;
 
 		public ContactsViewModel()
 		{
 			CreateCommand = new RelayCommand(Create, CanCreate);
-			EditCommand = new RelayCommand(Edit, CanEdit);
-			DeleteCommand = new RelayCommand(DeleteAsync, CanDelete);
+			EditCommand = new RelayCommand<Contact>(Edit, CanEdit);
+			DeleteCommand = new RelayCommand<Contact>(DeleteAsync, CanDelete);
 			SearchCommand = new RelayCommand(Search, CanSearch);
 
 			// TODO: 
@@ -33,45 +33,45 @@ namespace Contacts.ViewModels
 			Contacts = new ObservableCollection<Contact>(await _repository.GetAllAsync());
 		}
 
-		private bool CanCreate(object obj)
+		private bool CanCreate()
 		{
 			return true;
 		}
 
-		private void Create(object obj)
+		private void Create()
 		{
-			OnCreateOrEditRequested?.Invoke(new Contact() { Id = 0 });
+			CreateOrEdit?.Invoke(this, new Contact() { Id = 0 });
 		}
 
-		private bool CanEdit(object parameter)
-		{
-			return SelectedContact != null;
-		}
-
-		private void Edit(object parameter)
-		{
-			OnCreateOrEditRequested?.Invoke(SelectedContact);
-		}
-
-		private bool CanDelete(object parameter)
+		private bool CanEdit(Contact parameter)
 		{
 			return SelectedContact != null;
 		}
 
-		private async void DeleteAsync(object parameter)
+		private void Edit(Contact parameter)
+		{
+			CreateOrEdit?.Invoke(this, SelectedContact);
+		}
+
+		private bool CanDelete(Contact parameter)
+		{
+			return SelectedContact != null;
+		}
+
+		private async void DeleteAsync(Contact parameter)
 		{
 			await _repository.DeleteAsync(SelectedContact);
 			FetchContacts();
 		}
 
-		private bool CanSearch(object parameter)
+		private bool CanSearch()
 		{
 			return ! String.IsNullOrEmpty(SearchQuery);
 		}
 
-		private void Search(object obj)
+		private void Search()
 		{
-			// TO DO:
+			// TODO:
 		}
 
 		public ObservableCollection<Contact> Contacts
@@ -89,7 +89,7 @@ namespace Contacts.ViewModels
 			{
 				if (SetProperty(ref _searchQuery, value, nameof(SearchQuery)))
 				{
-					SearchCommand.RaiseCanExecuteChangedEvent();
+					SearchCommand.OnCanExecuteChanged();
 				}
 			}
 		}
@@ -101,8 +101,8 @@ namespace Contacts.ViewModels
 			{
 				if (SetProperty(ref _selectedContact, value, nameof(SelectedContact)))
 				{
-					EditCommand.RaiseCanExecuteChangedEvent();
-					DeleteCommand.RaiseCanExecuteChangedEvent();
+					EditCommand.OnCanExecuteChanged();
+					DeleteCommand.OnCanExecuteChanged();
 				}
 			}
 		}

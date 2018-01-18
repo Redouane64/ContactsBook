@@ -17,7 +17,8 @@
 			<views:ContactsView></views:ContactsView>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type viewmodels:ContactViewModel}">
-			<views:ContactView></views:ContactView>
+			<views:ContactView VerticalAlignment="Center"
+			                   HorizontalAlignment="Center"></views:ContactView>
 		</DataTemplate>
 	</Window.Resources>
 	<Window.DataContext>

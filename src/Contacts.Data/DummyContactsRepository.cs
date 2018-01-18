@@ -8,7 +8,7 @@ using Contacts.Models;
 
 namespace Contacts.Data
 {
-	public class DummyContactsRepository : IRepository<Contact>
+	public class DummyContactsRepository : IContactsRepository
 	{
 		private static object _syncroot = new object();
 		private static DummyContactsRepository _singleton;

@@ -12,21 +12,30 @@ namespace Contacts.ViewModels
 
 		private Contact _contact;
 
-		public event Action OnCompleted;
+		public event EventHandler<Contact> Complete;
+		public event EventHandler Cancel;
 
 		public ContactViewModel()
 		{
-			SaveCommand = new RelayCommand(Save, CanSave);
+			CancelCommand = new RelayCommand(Canceling);
+			SaveCommand = new RelayCommand<Contact>(Save, CanSave);
 			_repository = DummyContactsRepository.Singleton;
 
 		}
 
-		private bool CanSave(object obj)
+		private void Canceling()
 		{
+			// TODO:
+			OnCancel();
+		}
+
+		private bool CanSave(Contact parameter)
+		{
+			// TODO:
 			return true;
 		}
 
-		private async void Save(object obj)
+		private async void Save(Contact parameter)
 		{
 			if (_contact.Id == 0)
 			{
@@ -41,7 +50,7 @@ namespace Contacts.ViewModels
 				await _repository.AddAsync(Contact);
 			}
 
-			OnCompleted?.Invoke();
+			OnComplete();
 		}
 
 		public Contact Contact
@@ -58,5 +67,19 @@ namespace Contacts.ViewModels
 			get;
 		}
 
+		public RelayCommand CancelCommand
+		{
+			get;
+		}
+
+		protected virtual void OnComplete()
+		{
+			Complete?.Invoke(this, _contact);
+		}
+
+		protected virtual void OnCancel()
+		{
+			Cancel?.Invoke(this, EventArgs.Empty);
+		}
 	}
 }
